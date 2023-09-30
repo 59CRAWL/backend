@@ -10,25 +10,30 @@ CORS(app)
 def ingestor():
     # Check if a file is included in the request
     if 'file' not in request.files:
-        return jsonify({'error': 'No file part'})
-    
-    file = request.files['file']
-
-    # Check if the file has a name and is a CSV file
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'})
-
-    if not file.filename.endswith('.csv'):
-        return jsonify({'error': 'File must be a CSV'})
+        with open('mockData/port_mock_data.csv', 'r') as file:
+            predicted_df = model(file)
         
-    predicted_csv = model(file)
-    
-    corrected_json = allocation(predicted_csv)
+            corrected_json = allocation(predicted_df)
+                
+            return jsonify(corrected_json)
+    else:
+        file = request.files['file']
+
+        # Check if the file has a name and is a CSV file
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'})
+
+        if not file.filename.endswith('.csv'):
+            return jsonify({'error': 'File must be a CSV'})
+            
+        predicted_df = model(file)
         
-    return jsonify(corrected_json)
+        corrected_json = allocation(predicted_df)
+            
+        return jsonify(corrected_json)
     
-    # # Save the uploaded CSV file to a folder
-    # file.save(os.path.join('uploads', file.filename))
+        # # Save the uploaded CSV file to a folder
+        # file.save(os.path.join('uploads', file.filename))
 
 if __name__ == '__main__':
     app.run(port=5000)
