@@ -7,21 +7,23 @@ app = Flask(__name__)
 @app.route("/ingestor", methods=["POST"])
 def ingestor():
     # Check if a file is included in the request
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'})
+    # if 'file' not in request.files:
+    #     return jsonify({'error': 'No file part'})
 
-    file = request.files['file']
+    # file = request.files['file']
 
-    # Check if the file has a name and is a CSV file
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'})
+    # # Check if the file has a name and is a CSV file
+    # if file.filename == '':
+    #     return jsonify({'error': 'No selected file'})
 
-    if not file.filename.endswith('.csv'):
-        return jsonify({'error': 'File must be a CSV'})
+    # if not file.filename.endswith('.csv'):
+    #     return jsonify({'error': 'File must be a CSV'})
+        
+    # predicted_csv = model(file)
     
-    predicted_csv = model(file)
+    # corrected_json = allocation(predicted_csv)
     
-    corrected_json = allocation(predicted_csv)
+    corrected_json = allocation(None)
     
     return jsonify(corrected_json)
     
