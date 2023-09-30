@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from allocation import allocation
 from model import model
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/ingestor", methods=["POST"])
 def ingestor():
