@@ -32,7 +32,8 @@ Begins algorithm to adjust time sheet and push ships around until expected times
 # Create queues
 #   1 for each berth that is being used
 #       Data that should be populated with should look like [EDT, EDT, EDT, ...]
-berths = [Queue() for _ in range(2)]
+n = 2
+berths = [Queue() for _ in range(n)]
 
 # 1. Call Machine Learning model with a input CSV file
 data = [{"shipId": 1, "EAT": datetime.datetime.now(),"EDT": datetime.datetime.now() + datetime.timedelta(days=7)}, 
