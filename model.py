@@ -54,7 +54,3 @@ def model(csvfile):
     df['PTD'] = pd.to_datetime(df['PTD'], dayfirst=True)
 
     return df
-
-# file_path = 'mockData/port_mock_data.csv'
-# with open(file_path, 'r') as file:
-#     model(file)
