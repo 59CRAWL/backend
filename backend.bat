@@ -13,4 +13,4 @@ REM Step 4: Move to app directory
 cd app
 
 REM Step 5: Start the Flask application in the background
-start cmd /k python app.py
+cmd /k python app.py
