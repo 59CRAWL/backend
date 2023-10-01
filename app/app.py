@@ -30,7 +30,7 @@ def ingestor():
         predicted_df = model(file)
         
         corrected_json = allocation(predicted_df)
-            
+        
         return jsonify(corrected_json)
     
         # # Save the uploaded CSV file to a folder
