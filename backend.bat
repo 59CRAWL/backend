@@ -9,8 +9,8 @@ call venv\Scripts\activate
 REM Step 3: Install required Python packages
 pip install -r requirements.txt
 
-REM Step 3: Move to app directory
-cd /d app
+REM Step 4: Move to app directory
+cd app
 
-REM Step 4: Run your Flask application
-start cmd /k "python app.py"
+REM Step 5: Start the Flask application in the background
+start cmd /k python app.py
