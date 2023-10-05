@@ -11,7 +11,7 @@ import pandas as pd
 
 load_dotenv()
 
-def csv_agent(json="", prompt=""):``
+def csv_agent(json="", prompt=""):
     # Create a Pandas DataFrame from the list of dictionaries
     df = pd.DataFrame(json)
 
