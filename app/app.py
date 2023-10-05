@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from allocation import allocation
 from model import model
-from chat import llama
+from chat import csv_agent
 
 app = Flask(__name__)
 CORS(app)
@@ -30,7 +30,7 @@ def ingestor():
         predicted_df = model(file)
         
         corrected_json = allocation(predicted_df)
-        
+
         return jsonify(corrected_json)
     
         # # Save the uploaded CSV file to a folder
@@ -39,7 +39,8 @@ def ingestor():
 @app.route("/chat", methods=["POST"])
 def chat():
     body = request.get_json()
-    return llama(body.get("json"), prompt=body.get("prompt"))
+
+    return csv_agent(body.get("json"), prompt=body.get("prompt"))
     
 if __name__ == '__main__':
     app.run(port=5000)
