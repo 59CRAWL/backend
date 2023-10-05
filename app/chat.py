@@ -12,24 +12,32 @@ import pandas as pd
 load_dotenv()
 
 def csv_agent(json="", prompt=""):
-    # Create a Pandas DataFrame from the list of dictionaries
-    df = pd.DataFrame(json)
+    try:
+        # Create a Pandas DataFrame from the list of dictionaries
+        df = pd.DataFrame(json)
 
-    # Specify the CSV file name
-    csv_file_name = "output.csv"
+        df = df.rename(columns={"eta": "Arrival", "ptd": "Departure"})   
+        df["On Time"] = df[["asScheduled", "predictedDelayBinary"]].max(axis=1).map({1: "On Time", 2: "Delayed"})
+        df = df.drop(columns=["id", "terminal", "service", "weather", "expectedDuration", "etd", "predictedDelayBinary", "predictedDuration", "asScheduled", "predictedDelay"])
 
-    # Save the DataFrame to a CSV file
-    df.to_csv(csv_file_name, index=False)
+        # Specify the CSV file name
+        csv_file_name = "output.csv"
 
-    agent = create_csv_agent(
-        ChatOpenAI(model="gpt-3.5-turbo-0613", temperature=0),
-        "output.csv",
-        verbose=True,
-        agent_type=AgentType.OPENAI_FUNCTIONS,
-    )
+        # Save the DataFrame to a CSV file
+        df.to_csv(csv_file_name, index=False)
 
-    return agent.run(prompt)
-    
+        # return "test \n this should give new line"
+
+        agent = create_csv_agent(
+            ChatOpenAI(model="gpt-3.5-turbo-0613", temperature=0),
+            "output.csv",
+            verbose=True,
+            agent_type=AgentType.OPENAI_FUNCTIONS,
+        )
+
+        return agent.run(prompt)
+    except:
+        return "Error in backend's csv_agent, please try again."    
 
 def llama(json="", prompt=""):
     MAX_TOKEN = 4096 - 300 # 300 is lee way for the prompt, more than enough
