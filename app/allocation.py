@@ -75,7 +75,7 @@ def allocation(df):
                 # Update berth with PTD and update ship details
                 berth.enqueue(departure)
                 df.at[idx, "Berth"] = i
-                df.at[idx, "As Scheduled"] = 1
+                df.at[idx, "As Scheduled"] = 0
                 on_time = True
                 break
         
@@ -92,7 +92,7 @@ def allocation(df):
             
             # Update berth and scheduled or affected as accordingly
             df.at[idx, "Berth"] = next_berth
-            df.at[idx, "As Scheduled"] = 0
+            df.at[idx, "As Scheduled"] = 1
 
             # Calculate the updated estimated departure time and adjust in the sheets
             departure += earliest_departure - arrival

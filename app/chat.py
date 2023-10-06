@@ -17,7 +17,7 @@ def csv_agent(json="", prompt=""):
         df = pd.DataFrame(json)
 
         df = df.rename(columns={"eta": "Arrival", "ptd": "Departure"})   
-        df["On Time"] = df[["asScheduled", "predictedDelayBinary"]].max(axis=1).map({1: "On Time", 2: "Delayed"})
+        df["Status"] = df[["asScheduled", "predictedDelayBinary"]].max(axis=1).map({0: "On Time", 1: "Delayed"})
         df = df.drop(columns=["id", "terminal", "service", "weather", "expectedDuration", "etd", "predictedDelayBinary", "predictedDuration", "asScheduled", "predictedDelay"])
 
         # Specify the CSV file name
@@ -26,7 +26,10 @@ def csv_agent(json="", prompt=""):
         # Save the DataFrame to a CSV file
         df.to_csv(csv_file_name, index=False)
 
+        # print(df)
         # return "test \n this should give new line"
+
+        print(df)
 
         agent = create_csv_agent(
             ChatOpenAI(model="gpt-3.5-turbo-0613", temperature=0),
